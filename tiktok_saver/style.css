@@ -1,0 +1,379 @@
+        /* --- Reset & Base Variables --- */
+        :root {
+            /* Palette TikTok */
+            --primary: #000000; /* TikTok Black */
+            --primary-hover: #1a1a1a;
+            --secondary: #00f7ef; /* TikTok Cyan */
+            
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- Main Container --- */
+        .app-container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 500px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            border-top: 4px solid var(--primary); /* Petite touche YouTube en haut */
+        }
+
+        /* --- Header (Optionnel pour le branding) --- */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: -10px;
+        }
+        .brand-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary);
+        }
+        .brand-title {
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        /* --- Input Section --- */
+        .input-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+            color: var(--text-main);
+        }
+
+        .url-input:focus {
+            border-color: var(--primary);
+        }
+
+        .download-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            width: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(254, 44, 85, 0.3);
+        }
+
+        .download-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* --- Options Section --- */
+        .options-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .select-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            background-color: white;
+            font-size: 14px;
+            appearance: none;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        /* Custom arrow for select */
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 10px;
+            color: var(--text-muted);
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* --- Progress Section --- */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--secondary); /* Cyan pour la barre de progression */
+            width: 45%; 
+            border-radius: 5px;
+            transition: width 0.3s ease;
+            background-image: linear-gradient(45deg,rgba(255,255,255,.25) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.25) 50%,rgba(255,255,255,.25) 75%,transparent 75%,transparent);
+            background-size: 1rem 1rem;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            width: 40px;
+            text-align: right;
+        }
+
+        /* --- Controls Section --- */
+        .controls-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .control-btn.danger:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* --- Preview Card Section (Adapted for Vertical Video) --- */
+        .preview-card {
+            display: flex;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            align-items: center;
+        }
+
+        .thumbnail-container {
+            position: relative;
+            width: 60px; /* Plus étroit pour le format portrait */
+            height: 106px; /* Ratio 9:16 */
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .thumbnail-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: radial-gradient(circle, #333 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+
+        .play-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+        }
+        
+        .play-icon::after {
+            content: '';
+            display: block;
+            width: 0; 
+            height: 0; 
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            border-left: 7px solid white;
+            margin-left: 2px;
+        }
+
+        .video-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .video-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .author-avatar {
+            width: 16px;
+            height: 16px;
+            background: #ddd;
+            border-radius: 50%;
+        }
+
+        .watermark-badge {
+            display: inline-block;
+            font-size: 10px;
+            background: #e0f2fe;
+            color: #0284c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .preview-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            position: absolute;
+            inset: 0;
+        }
+
+        .thumbnail-container {
+            position: relative;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .status-message {
+            font-size: 12px;
+            color: var(--text-muted);
+            min-height: 18px;
+            margin: 0 0 8px;
+            text-align: center;
+        }
+
+        .status-message.error {
+            color: #ef4444;
+        }
+
+        .status-message.success {
+            color: var(--success);
+        }
+
+        .download-link {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .download-link:hover {
+            text-decoration: underline;
+        }
+
+        .control-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        /* --- Icons (SVG) --- */
+        svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        /* TikTok Logo SVG path */
+        .tiktok-logo {
+            fill: currentColor;
+            stroke: none;
+        }
+        
+        /* YouTube Logo SVG path */
+        .youtube-logo {
+            fill: currentColor;
+            stroke: none;
+        }

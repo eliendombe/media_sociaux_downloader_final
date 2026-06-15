@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Downloader</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Reset & Base Variables --- */
+        :root {
+            /* Palette YouTube */
+            --primary: #ff0000; /* YouTube Red */
+            --primary-hover: #cc0000;
+            --secondary: #ff0000; /* YouTube Red accent */
+            
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- Main Container --- */
+        .app-container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 500px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            border-top: 4px solid var(--primary); /* Petite touche YouTube en haut */
+        }
+
+        /* --- Header (Optionnel pour le branding) --- */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: -10px;
+        }
+        .brand-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary);
+        }
+        .brand-title {
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        /* --- Input Section --- */
+        .input-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+            color: var(--text-main);
+        }
+
+        .url-input:focus {
+            border-color: var(--primary);
+        }
+
+        .download-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            width: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(254, 44, 85, 0.3);
+        }
+
+        .download-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* --- Options Section --- */
+        .options-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .select-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            background-color: white;
+            font-size: 14px;
+            appearance: none;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        /* Custom arrow for select */
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 10px;
+            color: var(--text-muted);
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* --- Progress Section --- */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--secondary); /* Cyan pour la barre de progression */
+            width: 45%; 
+            border-radius: 5px;
+            transition: width 0.3s ease;
+            background-image: linear-gradient(45deg,rgba(255,255,255,.25) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.25) 50%,rgba(255,255,255,.25) 75%,transparent 75%,transparent);
+            background-size: 1rem 1rem;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            width: 40px;
+            text-align: right;
+        }
+
+        /* --- Controls Section --- */
+        .controls-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .control-btn.danger:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* --- Preview Card Section (Adapted for Vertical Video) --- */
+        .preview-card {
+            display: flex;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            align-items: center;
+        }
+
+        .thumbnail-container {
+            position: relative;
+            width: 60px; /* Plus étroit pour le format portrait */
+            height: 106px; /* Ratio 9:16 */
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .thumbnail-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: radial-gradient(circle, #333 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+
+        .play-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+        }
+        
+        .play-icon::after {
+            content: '';
+            display: block;
+            width: 0; 
+            height: 0; 
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            border-left: 7px solid white;
+            margin-left: 2px;
+        }
+
+        .video-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .video-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .author-avatar {
+            width: 16px;
+            height: 16px;
+            background: #ddd;
+            border-radius: 50%;
+        }
+
+        .watermark-badge {
+            display: inline-block;
+            font-size: 10px;
+            background: #e0f2fe;
+            color: #0284c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        /* --- Icons (SVG) --- */
+        svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        /* TikTok Logo SVG path */
+        .tiktok-logo {
+            fill: currentColor;
+            stroke: none;
+        }
+        
+        /* YouTube Logo SVG path */
+        .youtube-logo {
+            fill: currentColor;
+            stroke: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Header Branding -->
+        <div class="header">
+            <i class="fab fa-youtube brand-icon"></i>
+            <span class="brand-title">YouTube Downloader</span>
+        </div>
+
+        <!-- URL Input Area -->
+        <div class="input-group">
+            <input type="text" class="url-input" value="https://www.youtube.com/watch?v=..." placeholder="Collez le lien YouTube ici...">
+            <button class="download-btn" id="startBtn" title="Télécharger">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </button>
+        </div>
+
+        <!-- Settings Selectors -->
+        <div class="options-row">
+            <div class="select-wrapper">
+                <select title="Qualité vidéo">
+                    <option>1080p (HD)</option>
+                    <option>720p</option>
+                    <option>480p</option>
+                    <option>360p</option>
+                    <option>Audio MP3</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select title="Format">
+                    <option>MP4</option>
+                    <option>MP3</option>
+                    <option>WebM</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <span class="progress-text" id="progressText">45%</span>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="controls-row">
+            <button class="control-btn" id="pauseBtn" title="Pause">
+                <svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            </button>
+            <button class="control-btn danger" id="cancelBtn" title="Annuler">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <button class="control-btn" id="folderBtn" title="Ouvrir le dossier">
+                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            </button>
+        </div>
+
+        <!-- Video Preview Card (YouTube Style) -->
+        <div class="preview-card">
+            <div class="thumbnail-container">
+                <div class="thumbnail-placeholder">
+                    <div class="play-icon"></div>
+                </div>
+            </div>
+            <div class="video-info">
+                <div class="video-title">Comment créer une page web HTML complète - Tutoriel pour débutants</div>
+                <div class="video-meta">
+                    <div class="author-avatar"></div>
+                    <span>Coding Channel</span>
+                </div>
+                <div class="watermark-badge">1080p HD</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Logique de simulation simple
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        
+        let progress = 45;
+        let isPaused = false;
+        let interval;
+
+        // Démarrer/Reprendre la simulation
+        function startDownload() {
+            if (interval) clearInterval(interval);
+            isPaused = false;
+            
+            interval = setInterval(() => {
+                if (!isPaused && progress < 100) {
+                    progress += 1;
+                    updateUI();
+                } else if (progress >= 100) {
+                    clearInterval(interval);
+                    progressText.innerText = "Fini";
+                    progressText.style.color = "var(--success)";
+                }
+            }, 80); // Un peu plus rapide pour YouTube (compression)
+        }
+
+        function updateUI() {
+            progressBar.style.width = progress + '%';
+            progressText.innerText = progress + '%';
+        }
+
+        // Écouteurs d'événements
+        startBtn.addEventListener('click', () => {
+            if(progress >= 100) progress = 0;
+            startDownload();
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            isPaused = !isPaused;
+            pauseBtn.style.borderColor = isPaused ? 'var(--primary)' : 'var(--border-color)';
+            pauseBtn.style.color = isPaused ? 'var(--primary)' : 'var(--text-muted)';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            clearInterval(interval);
+            progress = 0;
+            isPaused = false;
+            updateUI();
+            progressText.style.color = "var(--text-muted)";
+            progressText.innerText = "0%";
+        });
+
+    </script>
+</body>
+</html>

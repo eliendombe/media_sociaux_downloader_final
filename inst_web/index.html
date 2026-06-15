@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Downloader</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <div class="header">
+            <i class="fab fa-instagram brand-icon"></i>
+            <span class="brand-title">Instagram Downloader</span>
+        </div>
+
+        <div class="input-group">
+            <input type="text" class="url-input" id="urlInput" placeholder="Collez le lien Instagram ici...">
+            <button class="download-btn" id="startBtn" title="Télécharger">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </button>
+        </div>
+
+        <div class="options-row">
+            <div class="select-wrapper">
+                <select id="qualitySelect" title="Qualité vidéo">
+                    <option value="high">Haute qualité</option>
+                    <option value="medium">Qualité moyenne</option>
+                    <option value="low">Faible qualité</option>
+                    <option value="audio">Audio MP3</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="formatSelect" title="Format">
+                    <option value="mp4">MP4</option>
+                    <option value="jpg">JPG</option>
+                    <option value="mp3">MP3</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <span class="progress-text" id="progressText">0%</span>
+        </div>
+
+        <div class="controls-row">
+            <button class="control-btn" id="pauseBtn" title="Pause" disabled>
+                <svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            </button>
+            <button class="control-btn danger" id="cancelBtn" title="Annuler" disabled>
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <button class="control-btn" id="folderBtn" title="Ouvrir le dossier">
+                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            </button>
+        </div>
+
+        <div class="preview-card" id="previewCard">
+            <div class="thumbnail-container" id="thumbnailContainer">
+                <div class="thumbnail-placeholder" id="thumbnailPlaceholder">
+                    <div class="play-icon"></div>
+                </div>
+                <img id="previewThumbnail" class="preview-thumbnail" alt="" hidden>
+            </div>
+            <div class="video-info">
+                <div class="video-title" id="videoTitle">Collez un lien pour voir l'aperçu</div>
+                <div class="video-meta">
+                    <img id="authorAvatar" class="author-avatar-img" alt="" hidden>
+                    <div class="author-avatar" id="authorAvatarPlaceholder"></div>
+                    <span id="authorName">@username</span>
+                </div>
+                <div class="watermark-badge" id="qualityBadge">—</div>
+            </div>
+        </div>
+
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>

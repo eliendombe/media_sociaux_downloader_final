@@ -1,0 +1,468 @@
+/* --- Reset & Base Variables --- */
+        :root {
+            /* Palette YouTube */
+            --primary: #ff0000; /* YouTube Red */
+            --primary-hover: #cc0000;
+            --secondary: #ff0000; /* YouTube Red accent */
+            
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- Main Container --- */
+        .app-container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 520px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            border-top: 4px solid var(--primary); /* Petite touche YouTube en haut */
+        }
+
+        /* --- Header (Optionnel pour le branding) --- */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: -10px;
+        }
+        .brand-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary);
+        }
+        .brand-title {
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        /* --- Input Section --- */
+        .input-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+            color: var(--text-main);
+        }
+
+        .url-input:focus {
+            border-color: var(--primary);
+        }
+
+        .download-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            width: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(254, 44, 85, 0.3);
+        }
+
+        .download-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* --- Options Section --- */
+        .options-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .select-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            background-color: white;
+            font-size: 14px;
+            appearance: none;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        /* Custom arrow for select */
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 10px;
+            color: var(--text-muted);
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* --- Progress Section --- */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--secondary); /* Cyan pour la barre de progression */
+            width: 0%; 
+            border-radius: 5px;
+            transition: width 0.3s ease;
+            background-image: linear-gradient(45deg,rgba(255,255,255,.25) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.25) 50%,rgba(255,255,255,.25) 75%,transparent 75%,transparent);
+            background-size: 1rem 1rem;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            width: 40px;
+            text-align: right;
+        }
+
+        /* --- Controls Section --- */
+        .controls-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .control-btn.danger:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status-message {
+            font-size: 13px;
+            color: var(--danger);
+            text-align: center;
+            margin: -8px 0 0;
+        }
+
+        .status-message.success {
+            color: var(--success);
+        }
+
+        .preview-card.is-loading {
+            opacity: 0.7;
+        }
+
+        /* --- Preview Card (miniature → lecteur 16:9 style YouTube) --- */
+        .preview-card {
+            display: flex;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            align-items: center;
+            transition: gap 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .preview-card.is-playing {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .thumbnail-container {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 1px solid var(--border-color);
+            transform-style: preserve-3d;
+            perspective: 900px;
+            transition:
+                width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                border-radius 0.45s ease,
+                box-shadow 0.45s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .preview-card.is-playing .thumbnail-container {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        .media-stage {
+            position: absolute;
+            inset: 0;
+            transform-style: preserve-3d;
+            transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .preview-card.is-playing .media-stage {
+            transform: rotateY(0deg);
+        }
+
+        .preview-card.is-playing .media-stage {
+            animation: unfold-to-rectangle 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes unfold-to-rectangle {
+            0% {
+                transform: rotateY(-88deg) scale(0.92);
+                opacity: 0.85;
+            }
+            100% {
+                transform: rotateY(0deg) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .thumbnail-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            inset: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .youtube-player {
+            position: absolute;
+            inset: 0;
+            background: #000;
+        }
+
+        .youtube-player iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        .thumbnail-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: radial-gradient(circle, #333 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+
+        .play-icon {
+            width: 28px;
+            height: 28px;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .play-icon::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 8px solid white;
+            margin-left: 2px;
+        }
+
+        .media-overlay-btn {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: background 0.2s, transform 0.2s, opacity 0.25s;
+            backdrop-filter: blur(4px);
+        }
+
+        .media-overlay-btn:hover {
+            background: rgba(255, 0, 0, 0.9);
+            transform: translate(-50%, -50%) scale(1.06);
+        }
+
+        .preview-card.is-playing .media-overlay-btn {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .preview-card.is-playing:hover .media-overlay-btn,
+        .preview-card.is-playing:focus-within .media-overlay-btn {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .preview-card.has-video:not(.is-playing) .media-overlay-btn {
+            opacity: 1;
+        }
+
+        .control-btn i {
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        .video-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .video-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .author-avatar {
+            width: 16px;
+            height: 16px;
+            background: #ddd;
+            border-radius: 50%;
+        }
+
+        .watermark-badge {
+            display: inline-block;
+            font-size: 10px;
+            background: #e0f2fe;
+            color: #0284c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        /* --- Icons (SVG) --- */
+        svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        /* TikTok Logo SVG path */
+        .tiktok-logo {
+            fill: currentColor;
+            stroke: none;
+        }
+        
+        /* YouTube Logo SVG path */
+        .youtube-logo {
+            fill: currentColor;
+            stroke: none;
+        }
+

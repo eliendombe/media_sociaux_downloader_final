@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Video Downloader</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <div class="header">
+            <i class="fab fa-tiktok brand-icon"></i>
+            <span class="brand-title">TikTok Downloader</span>
+        </div>
+
+        <div class="input-group">
+            <input type="text" class="url-input" id="urlInput" placeholder="Collez un lien TikTok ou YouTube…" autocomplete="off">
+            <button class="download-btn" id="startBtn" title="Télécharger" type="button">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </button>
+        </div>
+
+        <div class="options-row">
+            <div class="select-wrapper">
+                <select id="qualitySelect" title="Qualité vidéo">
+                    <option value="1080p">1080p (HD)</option>
+                    <option value="720p" selected>720p</option>
+                    <option value="480p">480p</option>
+                    <option value="360p">360p</option>
+                    <option value="audio">Audio MP3</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="formatSelect" title="Format">
+                    <option value="mp4">MP4</option>
+                    <option value="mp3">MP3</option>
+                    <option value="webm">WebM</option>
+                </select>
+            </div>
+        </div>
+
+        <p class="status-message" id="statusMessage" aria-live="polite"></p>
+
+        <div class="progress-container">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <span class="progress-text" id="progressText">0%</span>
+        </div>
+
+        <div class="controls-row">
+            <button class="control-btn" id="pauseBtn" title="Pause (non disponible)" type="button" disabled>
+                <svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            </button>
+            <button class="control-btn danger" id="cancelBtn" title="Annuler" type="button">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <button class="control-btn" id="folderBtn" title="Ouvrir le dossier des téléchargements" type="button">
+                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            </button>
+        </div>
+
+        <div class="preview-card" id="previewCard">
+            <div class="thumbnail-container">
+                <img class="preview-thumb hidden" id="previewThumb" alt="" />
+                <div class="thumbnail-placeholder" id="thumbPlaceholder">
+                    <div class="play-icon"></div>
+                </div>
+            </div>
+            <div class="video-info">
+                <div class="video-title" id="videoTitle">Collez un lien pour afficher l’aperçu</div>
+                <div class="video-meta">
+                    <div class="author-avatar" id="authorAvatar"></div>
+                    <span id="videoAuthor">—</span>
+                </div>
+                <div class="watermark-badge" id="qualityBadge">720p</div>
+            </div>
+        </div>
+
+        <a class="download-link hidden" id="fileDownloadLink" href="#" download>Télécharger le fichier</a>
+
+    </div>
+<script src="script.js"></script>
+</body>
+</html>

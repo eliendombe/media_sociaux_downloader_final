@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Downloader</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Header Branding -->
+        <div class="header">
+            <i class="fab fa-youtube brand-icon"></i>
+            <span class="brand-title">YouTube Downloader</span>
+        </div>
+
+        <!-- URL Input Area -->
+        <div class="input-group">
+            <input type="text" class="url-input" id="urlInput" placeholder="Collez le lien YouTube ici...">
+            <button class="download-btn" id="startBtn" title="Télécharger" type="button">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </button>
+        </div>
+
+        <!-- Settings Selectors -->
+        <div class="options-row">
+            <div class="select-wrapper">
+                <select id="qualitySelect" title="Qualité vidéo">
+                    <option value="1080p">1080p (HD)</option>
+                    <option value="720p">720p</option>
+                    <option value="480p">480p</option>
+                    <option value="360p">360p</option>
+                    <option value="audio">Audio MP3</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="formatSelect" title="Format">
+                    <option value="mp4">MP4</option>
+                    <option value="mp3">MP3</option>
+                    <option value="webm">WebM</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <span class="progress-text" id="progressText">0%</span>
+        </div>
+
+        <!-- Video Preview Card (YouTube Style) -->
+        <div class="preview-card" id="previewCard">
+            <div class="thumbnail-container" id="thumbnailContainer">
+                <div class="media-stage" id="mediaStage">
+                    <img id="thumbnailImg" class="thumbnail-img" alt="" hidden>
+                    <div class="youtube-player" id="youtubePlayer" hidden></div>
+                    <div class="thumbnail-placeholder" id="thumbnailPlaceholder">
+                        <div class="play-icon"></div>
+                    </div>
+                </div>
+                <button class="media-overlay-btn" id="overlayPlayBtn" type="button" title="Lecture" hidden aria-label="Lecture">
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+            <div class="video-info">
+                <div class="video-title" id="videoTitle">Collez un lien YouTube pour afficher l’aperçu</div>
+                <div class="video-meta">
+                    <div class="author-avatar"></div>
+                    <span id="channelName">—</span>
+                </div>
+                <div class="watermark-badge" id="qualityBadge">—</div>
+            </div>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="controls-row">
+            <button class="control-btn" id="previewPlayBtn" title="Lecture" type="button" disabled>
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="control-btn" id="previewPauseBtn" title="Pause" type="button" disabled>
+                <i class="fas fa-pause"></i>
+            </button>
+            <button class="control-btn danger" id="cancelBtn" title="Annuler" type="button" disabled>
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <button class="control-btn" id="folderBtn" title="Télécharger le dernier fichier" type="button">
+                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            </button>
+        </div>
+
+        <p class="status-message" id="statusMessage" hidden></p>
+
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>
